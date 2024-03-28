@@ -52,5 +52,4 @@ func webfinger(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusOK)
 	c.Writer.Header().Add("content-type", "application/jrd+json")
 	c.Writer.Write(payloadJson)
-	return
 }
