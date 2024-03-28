@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"log"
+	"os"
 )
 
 type webfingerResponse struct {
@@ -20,7 +20,7 @@ type webfingerLinks struct {
 
 func readPayload() (*webfingerResponse, error) {
 	log.Println("attempting to open payload")
-	payload, err := ioutil.ReadFile("payload.json")
+	payload, err := os.ReadFile("payload.json")
 	if err != nil {
 		log.Println(err)
 		return nil, err
