@@ -1,16 +1,18 @@
-package main
+package httpserver
 
 import (
+	"context"
 	"encoding/json"
 	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/wgeorgecook/webfinger/internal/files"
 )
 
 var srv *http.Server
 
-func startServer() {
+func Start() {
 	r := gin.Default()
 
 	r.GET("/.well-known/webfinger", webfinger)
@@ -26,12 +28,19 @@ func startServer() {
 	}
 
 }
+
+func Shutdown(ctx context.Context) error {
+	if err := srv.Shutdown(ctx); err != nil {
+		return err
+	}
+	return nil
+}
 func webfinger(c *gin.Context) {
 	log.Println("webfinger request received")
 	defer log.Println("finished webfinger request")
 
 	// read the json payload we return
-	payload, err := readPayload()
+	payload, err := files.ReadPayload()
 	if err != nil {
 		c.Error(err)
 		c.JSON(http.StatusInternalServerError, gin.H{

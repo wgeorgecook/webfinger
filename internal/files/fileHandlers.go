@@ -1,4 +1,4 @@
-package main
+package files
 
 import (
 	"encoding/json"
@@ -18,9 +18,9 @@ type webfingerLinks struct {
 	Template string `json:"template,omitempty"`
 }
 
-func readPayload() (*webfingerResponse, error) {
+func ReadPayload() (*webfingerResponse, error) {
 	log.Println("attempting to open payload")
-	payload, err := os.ReadFile("payload.json")
+	payload, err := os.ReadFile("./data/payload.json")
 	if err != nil {
 		log.Println(err)
 		return nil, err

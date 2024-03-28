@@ -1,4 +1,4 @@
-module webfinger
+module "github.com/wgeorgecook/webfinger"
 
 go 1.19
 
