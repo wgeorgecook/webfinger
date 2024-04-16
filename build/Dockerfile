@@ -11,7 +11,7 @@ RUN go mod download
 COPY . ./
 
 # Build the binary.
-RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o webfinger ./cmd/main.go
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o app ./cmd/main.go
 
 # Install dependencies on the target image
 FROM alpine
@@ -20,7 +20,7 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /webfinger
 
 # Copy the binary to the production image from the builder stage.
-COPY --from=builder /webfinger/webfinger /webfinger
+COPY --from=builder /webfinger/app /webfinger
 
 # Copy the payload to the production image from builder
 COPY --from=builder /webfinger/data/payload.json /webfinger/data/
@@ -34,4 +34,4 @@ RUN adduser --disabled-password --gecos "" --ingroup apprunner apprunner
 USER apprunner 
 
 # Run the web service on container startup.
-CMD ["./webfinger"]
+CMD ["./app"]
