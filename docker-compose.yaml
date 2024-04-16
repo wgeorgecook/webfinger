@@ -8,3 +8,5 @@ services:
     build:
       context: .
       dockerfile: ./build/Dockerfile
+    environment:
+      GIN_MODE: $GIN_MODE
